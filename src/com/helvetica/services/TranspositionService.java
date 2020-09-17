@@ -5,9 +5,9 @@ public class TranspositionService {
     public int [][] getTransposed(int [][] matrix) {
         int dimension = matrix.length;
         int [][] transposedMatrix = new int [dimension][dimension];
-        for (int i = 0; i < dimension; i++) {
-            for (int j = 0; j < dimension; j++) {
-                transposedMatrix[i][j] = matrix[j][i];
+        for (int col = 0; col < dimension; col++) {
+            for (int row = 0; row < dimension; row++) {
+                transposedMatrix[col][row] = matrix[row][col];
             }
         }
         return transposedMatrix;

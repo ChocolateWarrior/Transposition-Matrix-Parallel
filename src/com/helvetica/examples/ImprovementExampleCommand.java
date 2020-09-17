@@ -11,6 +11,7 @@ public class ImprovementExampleCommand {
     public static final String ORIGINAL_MATRIX = "Original Matrix:";
     public static final String TRANSPOSED_SERIAL = "Transposed Serial:";
     public static final String TRANSPOSED_PARALLEL = "Transposed Parallel:";
+    private final int numThreads;
     private final int dimension;
 
     public void execute() throws InterruptedException {
@@ -35,18 +36,24 @@ public class ImprovementExampleCommand {
         PrintService.printFinished(t11);
         PrintService.printBlank();
 
+        PrintService.printThreads(numThreads);
         long t2 = System.currentTimeMillis();
-        threadTranspositionService.transpositionParallel(dimension, matrix);
+        threadTranspositionService.transpositionParallel(numThreads, matrix);
         long t21 = System.currentTimeMillis() - t2;
 
         PrintService.print(TRANSPOSED_PARALLEL);
         PrintService.printMatrix(threadTranspositionService.getTransposedMatrix());
         PrintService.printFinished(t21);
-        PrintService.printImprovement((double) t11/t21);
+
+        double improvement = (double) t11 / t21;
+        double efficiency = improvement / numThreads;
+        PrintService.printImprovement(improvement);
+        PrintService.printEfficiency(efficiency);
 
     }
 
-    public ImprovementExampleCommand(int dimension) {
+    public ImprovementExampleCommand(int numThreads, int dimension) {
+        this.numThreads = numThreads;
         this.dimension = dimension;
     }
 }
